@@ -4,3 +4,8 @@
 2. **Survival**: Each live cell with either two or three live neighbors will remain alive for the next generation.
 3. **Death by isolation**: Each live cell with one or fewer live neighbors will die in the next generation.
 4. **Death by overcrowding**: Each live cell with four or more live neighbors will die in the next generation.
+
+## Setup
+1. Clone this repository
+2. > npm i
+3. > npm start
