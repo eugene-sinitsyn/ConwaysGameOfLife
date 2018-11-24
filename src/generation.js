@@ -1,27 +1,35 @@
-import { Point } from './point';
+const Point = require('./point');
 
-export class Generation {
-  public constructor(source: string | Generation) {
+module.exports = class Generation {
+  /** @param {(string|Generation)} source */
+  constructor(source) {
+    /** @private
+      * @type {booleal[][]} */
+    this.cells = null;
+
     switch (typeof source) {
-      case 'string': this.initFromString(source as string); break;
-      case 'object': this.initFromPrevious(source as Generation); break;
+      case 'string': this.initFromString(source); break;
+      case 'object': this.initFromPrevious(source); break;
       default: throw new Error(`Couldn't create next generation`);
     }
   }
 
-  private cells: boolean[][];
-
-  public get size(): Point {
+  /** @type {Point} size */
+  get size() {
     return new Point(this.cells.length, this.cells[0].length);
   }
 
-  public cell(point: Point): boolean {
+  /** @param {Point} point
+    * @returns {boolean} */
+  cell(point) {
     return this.cells[point.x] ? !!this.cells[point.x][point.y] : false;
   }
 
-  private initFromString(config: string): void {
-    this.cells = new Array(config.indexOf('\n'));
-    const rows = config.split('\n');
+  /** @private
+    * @param {string} config */
+  initFromString(config) {
+    this.cells = new Array(config.indexOf('\r\n'));
+    const rows = config.split('\r\n');
     const size = new Point(rows[0].length, rows.length);
 
     for (let x = 0; x < size.x; x++) {
@@ -31,12 +39,14 @@ export class Generation {
     }
   }
 
-  private initFromPrevious(previous: Generation): void {
+  /** @private
+    * @param {Generation} previous */
+  initFromPrevious(previous) {
     this.cells = new Array(previous.size.x);
     for(let x = 0; x < previous.size.x; x++) {    // +-----X
       this.cells[x] = new Array(previous.size.y); // |
       for (let y = 0; y < previous.size.y; y++) { // |
-        const cellsAliveNearby: number = [        // Y
+        const cellsAliveNearby = [                // Y
           new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1),
           new Point(x - 1, y), /*    current cell    */ new Point(x + 1, y),
           new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)

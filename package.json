@@ -2,16 +2,10 @@
   "name": "game-of-life",
   "version": "1.0.0",
   "description": "Game Of Life",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "scripts": {
-    "start": "npm run build & npm run play",
-    "build": "tsc",
-    "play": "node dist/index.js"
+    "start": "node src/index.js"
   },
   "author": "github.com/eugene-sinitsyn",
-  "license": "ISC",
-  "devDependencies": {
-    "typescript": "^2.7.1",
-    "@types/node": "^9.4.0"
-  }
+  "license": "ISC"
 }
